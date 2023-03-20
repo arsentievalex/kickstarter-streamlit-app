@@ -33,6 +33,15 @@ grouped_df_category = df.groupby("category_parent_name").agg({"pledged_usd": ["s
 # rename columns
 grouped_df_category.columns = ["Category", "Total pledged", "Total projects", "Average pledged per project"]
 
+# group by category and sum of backers
+grouped_df_backers = df.groupby("category_parent_name").agg({"backers_count": ["sum"]}).reset_index()
+
+# rename columns
+grouped_df_backers.columns = ["Category", "Total backers"]
+
+# merge grouped_df_category and grouped_df_backers
+grouped_df_category = pd.merge(grouped_df_category, grouped_df_backers, on="Category")
+
 
 # Create title
 st.title('Most Funded US Projects on Kickstarter')
@@ -88,9 +97,8 @@ fig.update_layout(plot_bgcolor='#f2f2f2', font=dict(size=14))
 
 st.plotly_chart(fig, use_container_width=True)
 
-
-
-selected_metric = st.selectbox("Select a metric", ["Total pledged", "Average pledged per project", "Total projects"])
+# create a dropdown to select metric
+selected_metric = st.selectbox("Select a metric", ["Total pledged", "Average pledged per project", "Total projects", 'Total backers'])
 
 if selected_metric == "Total pledged":
     # create a horizontal bar chart with categories
@@ -135,6 +143,22 @@ elif selected_metric == "Total projects":
 
     # update on hover text
     fig_2.update_traces(hovertemplate="Total projects: %{x:.2s}<extra></extra>")
+    fig_2.update_coloraxes(showscale=False)
+
+    # show chart
+    st.plotly_chart(fig_2, use_container_width=True)
+
+elif selected_metric == "Total backers":
+    # create a horizontal bar chart with categories
+    fig_2 = px.bar(grouped_df_category, x="Total backers", y="Category", color="Total backers", orientation='h',
+                   color_continuous_scale=px.colors.sequential.Tealgrn, title='Total Backers per Category')
+
+    # sort bar chart by total pledged
+    fig_2.update_layout(yaxis={'categoryorder': 'total ascending'},
+                        plot_bgcolor='#f2f2f2', font=dict(size=14))
+
+    # update on hover text
+    fig_2.update_traces(hovertemplate="Total backers: %{x:.2s}<extra></extra>")
     fig_2.update_coloraxes(showscale=False)
 
     # show chart

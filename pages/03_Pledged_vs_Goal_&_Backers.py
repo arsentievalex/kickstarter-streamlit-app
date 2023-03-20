@@ -78,7 +78,6 @@ with st.sidebar:
     st.markdown('''The first scatterplot shows the relationship between pledged and goal amount by category.''')
     st.markdown('''The second scatterplot shows the relationship between pledged amount and a number of backers by category.''')
 
-# insert html break into markdow
 
 with st.expander('Expand to see the data'):
     st.dataframe(grouped_df, use_container_width=True)
@@ -94,7 +93,7 @@ pct = grouped_df[grouped_df['Category'] == selected_category]['Percentage of goa
 
 formatted_avg_pledged = "{:.1f}M".format(avg_pledged / 1000000)
 st.write('')
-st.subheader('The average pledged amount per project in {} category is {} USD, which is {}% of the average goal of {} USD'
+st.markdown('The average pledged amount per project in **{}** category is **{} USD**, which is :green[**{}%**] of the average goal of **{} USD**'
              .format(selected_category.lower(), formatted_avg_pledged, int(pct), '{:0,.0f}'.format(avg_goal)))
 
 fig = go.Figure(go.Indicator(
