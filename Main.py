@@ -29,6 +29,7 @@ unique_categories = df['category_parent_name'].unique()
 
 # Create title
 st.title('Most Funded US Projects on Kickstarter')
+st.write('')
 
 # create sidebar
 st.sidebar.header('About')

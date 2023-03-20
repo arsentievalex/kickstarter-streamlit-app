@@ -36,6 +36,7 @@ grouped_df_category.columns = ["Category", "Total pledged", "Total projects", "A
 
 # Create title
 st.title('Most Funded US Projects on Kickstarter')
+st.write('')
 
 # create sidebar
 st.sidebar.header('About')

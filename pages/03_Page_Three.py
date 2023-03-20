@@ -67,6 +67,8 @@ grouped_df.sort_values(by='Percentage of goal', ascending=False, inplace=True)
 
 # Create title
 st.title('Most Funded US Projects on Kickstarter')
+st.write('')
+st.write('')
 
 # create sidebar
 st.sidebar.header('About')
@@ -91,7 +93,7 @@ pct = grouped_df[grouped_df['Category'] == selected_category]['Percentage of goa
 
 
 formatted_avg_pledged = "{:.1f}M".format(avg_pledged / 1000000)
-
+st.write('')
 st.subheader('The average pledged amount per project in {} category is {} USD, which is {}% of the average goal of {} USD'
              .format(selected_category.lower(), formatted_avg_pledged, int(pct), '{:0,.0f}'.format(avg_goal)))
 
